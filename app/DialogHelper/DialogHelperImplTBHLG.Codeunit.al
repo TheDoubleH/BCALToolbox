@@ -62,7 +62,7 @@ codeunit 81501 "Dialog Helper Impl TBHLG"
     /// <param name="FieldNo">Integer.</param>
     /// <param name="Count">Integer.</param>
     /// <param name="NoOfRecs">Integer.</param>
-    procedure UpdateWindowIndicator(FieldNo: Integer; Count: Integer; NoOfRecs: Integer);
+    procedure UpdateWindowIndicator(FieldNo: Integer; Counter: Integer; NoOfRecords: Integer);
     var
         EndTime: DateTime;
         CurrDuration: Duration;
@@ -74,15 +74,14 @@ codeunit 81501 "Dialog Helper Impl TBHLG"
         if CurrentDateTime < LastUpdate + 1000 then
             exit;
 
-
-        Window.Update(FieldNo, ROUND(Count / NoOfRecs * 10000, 1, '<'));
+        Window.Update(FieldNo, ROUND(Counter / NoOfRecords * 10000, 1, '<'));
         LastUpdate := CurrentDateTime;
 
         if StartTime = 0DT then
             exit;
 
         CurrDuration := CurrentDateTime - StartTime;
-        EstimatedDuration := ROUND((CurrentDateTime - StartTime) * 100 / (Count / NoOfRecs * 100), 100);
+        EstimatedDuration := ROUND((CurrentDateTime - StartTime) * 100 / (Counter / NoOfRecords * 100), 100);
         EndTime := StartTime + EstimatedDuration;
         Window.UPDATE(20, FormatDuration(CurrDuration));
 
