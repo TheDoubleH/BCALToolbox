@@ -19,5 +19,8 @@
 			"path": ".azureDevOps"
 		}
 	],
-	"settings": {}
+	"settings": {
+		"CRS.ObjectNameSuffix": "TBHLG",
+		"CRS.OnSaveAlFileAction": "Rename"
+	}
 }

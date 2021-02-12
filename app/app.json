@@ -1,23 +1,15 @@
 {
-    "id":  "00000000-0000-0000-0000-000000000001",
-    "name":  "Default App Name",
-    "publisher":  "Default Publisher",
-    "brief":  "",
-    "description":  "",
+    "id":  "5b18d914-89ed-4eb6-b56d-37db9cf6e5ba",
+    "name":  "BCALToolbox",
+    "publisher":  "Helgesen Consulting, Inc.",
+    "brief":  "Often-Used behind-the-scenes pieces of code, used by other apps",
+    "description":  "Often-Used behind-the-scenes pieces of code, used by other apps. Icons made by Prosymbols> from www.flaticon.com",
     "version":  "2.0.0.0",
     "privacyStatement":  "",
     "EULA":  "",
     "help":  "",
     "url":  "",
-    "logo":  "",
-    "dependencies":  [
-                         {
-                             "id":  "00000000-0000-0000-0000-000000000003",
-                             "publisher":  "Default Publisher",
-                             "name":  "Default Base App Name",
-                             "version":  "2.0.0.0"
-                         }
-                     ],
+    "logo":  "./Logo/ExtensionLogo.png",
     "screenshots":  [
 
                     ],
@@ -25,8 +17,8 @@
     "platform":  "17.0.0.0",
     "idRanges":  [
                      {
-                         "from":  50100,
-                         "to":  50149
+                         "from":  81500,
+                         "to":  81599
                      }
                  ],
     "showMyCode":  true,
