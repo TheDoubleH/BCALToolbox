@@ -1,0 +1,45 @@
+name: "CLOUD"
+
+on:
+  schedule:
+  - cron: '10 0 * * *'
+  workflow_dispatch:
+
+env:
+  version: cloud
+  appVersion: '2.0'
+  appBuild: 2147483647
+  appRevision: 0
+  environmentName: githubHelloWorld
+
+defaults:
+  run:
+    shell: PowerShell
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Run pipeline
+        env:
+          InsiderSasToken: ${{ secrets.InsiderSasToken }}
+          LicenseFile: ${{ secrets.LicenseFile }}
+          BcSaasRefreshToken: ${{ secrets.BcSaasRefreshToken }}
+          EnvironmentName: ${{ env.environmentName }}
+        run: scripts\DevOps-Pipeline.ps1 -environment GitHubActions -version ${{env.version}} -appBuild ${{env.appBuild}} -appRevision ${{env.appRevision}}
+
+      - name: Publish Test Results
+        uses: mikepenz/action-junit-report@v1
+        with:
+          report_paths: 'testresults*.xml'
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Cleanup
+        if: always()
+        env:
+          BcSaasRefreshToken: ${{ secrets.BcSaasRefreshToken }}
+          EnvironmentName: ${{ env.environmentName }}
+        run: scripts\Cleanup.ps1

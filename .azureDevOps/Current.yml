@@ -1,0 +1,70 @@
+trigger: none
+
+schedules:
+- cron: '0 0 * * *'
+  displayName: Daily Next Minor build
+  branches:
+    include:
+    - master
+  always: true
+
+pool:
+  vmImage: 'Windows-Latest'
+
+variables:
+- group: BuildVariables
+
+jobs:
+- job: Build
+  timeoutInMinutes: 300
+  variables:
+    build.clean: all
+    platform: x64
+    version: 'current'
+    appVersion: '2.0'
+    appBuild: $(Build.BuildID)
+    appRevision: 0
+    skipComponentGovernanceDetection: True
+
+  steps:
+  - task: PowerShell@2
+    displayName: 'Set BuildNumber'
+    inputs:
+      targetType: inline
+      script: 'Write-Host "##vso[build.updatebuildnumber]$(appVersion).$(appBuild).$(appRevision)"'
+
+  - task: PowerShell@2
+    displayName: 'Run Pipeline'
+    env:
+      InsiderSasToken: '$(InsiderSasToken)'
+      LicenseFile: '$(LicenseFile)'
+      CodeSignCertPfxFile: '$(CodeSignCertPfxFile)'
+      CodeSignCertPfxPassword: '$(CodeSignCertPfxPassword)'
+    inputs:
+      targetType: filePath
+      filePath: 'scripts\DevOps-Pipeline.ps1'
+      arguments: '-environment "AzureDevOps" -version "$(version)" -appBuild $(appBuild) -appRevision $(appRevision)'
+      failOnStderr: true
+
+  - task: PublishTestResults@2
+    displayName: 'Publish Test Results'
+    condition: and(succeeded(),ne(variables['TestResults'],''))
+    inputs:
+      testResultsFormat: JUnit
+      testResultsFiles: '$(testResults)'
+      failTaskOnFailedTests: true
+
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish Artifacts'
+    inputs:
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+      ArtifactName: output
+
+  - task: PowerShell@2
+    displayName: 'Cleanup'
+    condition: always()
+    inputs:
+      targetType: filePath
+      filePath: 'scripts\Cleanup.ps1'
+      arguments: '-environment "AzureDevOps"'
+      failOnStderr: false

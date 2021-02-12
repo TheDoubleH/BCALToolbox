@@ -1,0 +1,81 @@
+name: CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+  workflow_dispatch:
+
+env:
+  version: ci
+  appVersion: '2.0'
+  appBuild: ${{github.run_number}}
+  appRevision: 0
+
+defaults:
+  run:
+    shell: PowerShell
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Run pipeline
+        env:
+          InsiderSasToken: ${{ secrets.InsiderSasToken }}
+          LicenseFile: ${{ secrets.LicenseFile }}
+        run: scripts\DevOps-Pipeline.ps1 -environment GitHubActions -version ${{env.version}} -appBuild ${{env.appBuild}} -appRevision ${{env.appRevision}}
+
+      - name: Save manifest
+        run: |
+          @{ "Name" = "${{ github.event.repository.name }}"; "Version" = "${{env.appVersion}}.${{env.appBuild}}.${{env.appRevision}}" } | ConvertTo-Json | Set-Content "output\manifest.json"
+
+      - name: Publish Test Results
+        if: always()
+        uses: mikepenz/action-junit-report@v1
+        with:
+          report_paths: 'testresults*.xml'
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publish Artifacts - Apps
+        uses: actions/upload-artifact@v2
+        with:
+          name: Apps
+          path: output/Apps/
+          if-no-files-found: ignore
+
+      - name: Publish Artifacts - Runtime Packages
+        uses: actions/upload-artifact@v2
+        with:
+          name: RuntimePackages
+          path: output/RuntimePackages/
+          if-no-files-found: ignore
+
+      - name: Publish Artifacts - Test Apps
+        uses: actions/upload-artifact@v2
+        with:
+          name: TestApps
+          path: output/TestApps/
+          if-no-files-found: ignore
+
+      - name: Publish Artifacts - Test Results
+        uses: actions/upload-artifact@v2
+        with:
+          name: TestResults
+          path: output/testresults*.xml
+          if-no-files-found: ignore
+
+      - name: Publish Artifacts - Manifest
+        uses: actions/upload-artifact@v2
+        with:
+          name: Manifest
+          path: output/manifest.json
+          if-no-files-found: ignore
+
+      - name: Cleanup
+        if: always()
+        run: scripts\Cleanup.ps1

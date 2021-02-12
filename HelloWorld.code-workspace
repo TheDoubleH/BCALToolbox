@@ -1,0 +1,23 @@
+{
+	"folders": [
+		{
+			"path": "base"
+		},
+		{
+			"path": "app"
+		},
+		{
+			"path": "test"
+		},
+		{
+			"path": "scripts"
+		},
+		{
+			"path": ".github"
+		},
+		{
+			"path": ".azureDevOps"
+		}
+	],
+	"settings": {}
+}

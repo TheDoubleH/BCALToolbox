@@ -1,0 +1,43 @@
+name: Release
+
+on:
+  workflow_dispatch:
+
+defaults:
+  run:
+    shell: PowerShell
+
+jobs:
+  Release_to_storage:
+
+    runs-on: windows-latest
+
+    steps:
+      - uses: dawidd6/action-download-artifact@v2
+        with:
+          github_token: ${{secrets.GITHUB_TOKEN}}
+          workflow: ci.yml
+          workflow_conclusion: success
+
+      - name: Publish
+        env:
+          StorageConnectionString: ${{ secrets.StorageConnectionString }}
+        run: |
+          $manifest = Get-Content "Manifest\manifest.json" | ConvertFrom-Json
+          $appVersion = $manifest.Version
+          $projectName = "GitHub${{ github.event.repository.name }}".Replace('.','-').ToLowerInvariant()
+          $storageContext = New-AzureStorageContext -ConnectionString "${{ secrets.StorageConnectionString }}"
+          New-AzureStorageContainer -Name $projectName -Context $storageContext -Permission "Container" -ErrorAction Ignore | Out-Null
+          "RuntimePackages", "Apps", "TestApps" | % {
+            if (Test-Path "$_\*") {
+              $tempFile = Join-Path ([System.IO.Path]::Gettemppath()) "$([Guid]::newguid().ToString()).zip"
+              Compress-Archive -path (Get-Item $_).FullName -DestinationPath $tempFile
+              Write-Host "$appVersion/$_.zip".ToLowerInvariant()
+              Set-AzureStorageBlobContent -File $tempFile -Context $storageContext -Container $projectName -Blob "$appVersion/$_.zip".ToLowerInvariant() -Force | Out-Null
+              Write-Host "latest/$_.zip".ToLowerInvariant()
+              Set-AzureStorageBlobContent -File $tempFile -Context $storageContext -Container $projectName -Blob "latest/$_.zip".ToLowerInvariant() -Force | Out-Null
+              Remove-Item $tempFile -Force
+            }
+          }
+
+

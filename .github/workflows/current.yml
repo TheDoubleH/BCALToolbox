@@ -1,0 +1,39 @@
+name: "Current"
+
+on:
+  schedule:
+  - cron: '0 0 * * *'
+  workflow_dispatch:
+
+env:
+  version: current
+  appVersion: '2.0'
+  appBuild: 2147483647
+  appRevision: 0
+
+defaults:
+  run:
+    shell: PowerShell
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Run pipeline
+        env:
+          InsiderSasToken: ${{ secrets.InsiderSasToken }}
+          LicenseFile: ${{ secrets.LicenseFile }}
+        run: scripts\DevOps-Pipeline.ps1 -environment GitHubActions -version ${{env.version}} -appBuild ${{env.appBuild}} -appRevision ${{env.appRevision}}
+
+      - name: Publish Test Results
+        uses: mikepenz/action-junit-report@v1
+        with:
+          report_paths: 'testresults*.xml'
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Cleanup
+        if: always()
+        run: scripts\Cleanup.ps1
