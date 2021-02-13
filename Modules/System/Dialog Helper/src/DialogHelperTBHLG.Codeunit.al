@@ -1,6 +1,6 @@
 /// <summary>
 /// Codeunit Dialog Helper HLG (ID 81500).
-/// Codeunit for managing the dialog with the option to show the end user an estimated completion.
+/// Exposes functionality to raise a progress dialog with the option of showing an estimated end time.
 /// </summary>
 codeunit 81500 "Dialog Helper TBHLG"
 {
