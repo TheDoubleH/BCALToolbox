@@ -19,7 +19,7 @@ procedure OpenWindow(DialogString: text; ShowEstimatedEndTime: Boolean)
 #### Parameters
 *DialogString ([Text](https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/methods-auto/text/text-data-type))* 
 
- The dialog presented to the user. Use #1######## (where 1 is upped by one for eac placeholder) to add field that will change during the processing.  (see more ([Here](here https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/methods-auto/dialog/dialog-open-method)))
+ The dialog presented to the user. Use #1######## (where 1 is upped by one for eac placeholder) to add field that will change during the processing.  (see more ([Here](https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/methods-auto/dialog/dialog-open-method)))
 
 *ShowEstimatedEndTime ([Boolean](https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/methods-auto/boolean/boolean-data-type))* 
 
