@@ -10,7 +10,7 @@ env:
   appVersion: '2.0'
   appBuild: 2147483647
   appRevision: 0
-  environmentName: githubHelloWorld
+  environmentName: githubBCALToolbox
 
 defaults:
   run:

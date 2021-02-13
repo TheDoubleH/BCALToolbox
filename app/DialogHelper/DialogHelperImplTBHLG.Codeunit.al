@@ -27,7 +27,7 @@ codeunit 81501 "Dialog Helper Impl TBHLG"
     var
         WindowString: Text;
     begin
-        if not GuiAllowed then
+        if not IsGuiAllowed() then
             exit;
 
         StartTime := 0DT;
@@ -50,7 +50,7 @@ codeunit 81501 "Dialog Helper Impl TBHLG"
     /// <param name="Value">Text.</param>
     procedure UpdateWindow(FieldNo: Integer; Value: Text);
     begin
-        if GuiAllowed then
+        if not IsGuiAllowed then
             exit;
 
         Window.update(FieldNo, Value);
@@ -68,7 +68,7 @@ codeunit 81501 "Dialog Helper Impl TBHLG"
         CurrDuration: Duration;
         EstimatedDuration: Duration;
     begin
-        if not GuiAllowed then
+        if not IsGuiAllowed then
             exit;
 
         if CurrentDateTime < LastUpdate + 1000 then
@@ -105,4 +105,22 @@ codeunit 81501 "Dialog Helper Impl TBHLG"
         ELSE
             EXIT(STRSUBSTNO('%1 %2', Seconds, SecondsTxt));
     END;
+
+    local procedure IsGuiAllowed() GuiIsAllowed: Boolean
+    var
+        Handled: Boolean;
+    begin
+        OnBeforeGuiAllowed(GuiIsAllowed, Handled);
+        if Handled then
+            exit;
+        exit(GuiAllowed());
+    end;
+
+    /// <summary>
+    /// Raises an event to be able to change the return of IsGuiAllowed function. Used for testing.
+    /// </summary>
+    [InternalEvent(false)]
+    procedure OnBeforeGuiAllowed(var Result: Boolean; var Handled: Boolean)
+    begin
+    end;
 }
