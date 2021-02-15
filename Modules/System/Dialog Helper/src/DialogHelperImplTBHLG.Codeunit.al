@@ -1,7 +1,3 @@
-/// <summary>
-/// Codeunit Dialog Helper HLG (ID 50000).
-/// Codeunit for managing the dialog, with the option to show the end user an estimated completion.
-/// </summary>
 codeunit 81501 "Dialog Helper Impl TBHLG"
 {
     Access = Internal;
@@ -17,12 +13,6 @@ codeunit 81501 "Dialog Helper Impl TBHLG"
         MinutesTxt: Label 'Minutes';
         SecondsTxt: Label 'Seconds';
 
-    /// <summary>
-    /// OpenWindow must be called as the first step, and establishes the user interface.
-    /// </summary>
-    /// <param name="DialogString">i.e. Processing, Please be patient\@1@@@@@@@@@@@@@@@@@@@@@@@</param>
-    /// <param name="ShowEstimatedEndTime">Boolean. - If true, Text is amended to the DialogString to specify Duration, Elapsed - and Estimated end time.
-    /// Note! FieldNos 20, 21 and 22 will be used by the Duration, Elapsed and Esitmated end time</param>
     procedure OpenWindow(DialogString: text; ShowEstimatedEndTime: Boolean)
     var
         WindowString: Text;
@@ -40,37 +30,15 @@ codeunit 81501 "Dialog Helper Impl TBHLG"
 
         Window.open(WindowString);
         LastUpdate := CreateDateTime(19000101D, 100000T);
-
     end;
 
-    /// <summary>
-    /// UpdateWindow will only update fields, however will not update durations and estimated end time.
-    /// </summary>
-    /// <param name="FieldNo">Integer.</param>
-    /// <param name="Value">Text.</param>
-    procedure UpdateWindow(FieldNo: Integer; Value: Text);
-    begin
-        if not IsGuiAllowed then
-            exit;
-
-        Window.update(FieldNo, Value);
-    end;
-
-    /// <summary>
-    /// UpdateWindowIndicator.
-    /// </summary>
-    /// <param name="FieldNo">Integer.</param>
-    /// <param name="Count">Integer.</param>
-    /// <param name="NoOfRecs">Integer.</param>
-    procedure UpdateWindowIndicator(FieldNo: Integer; Counter: Integer; NoOfRecords: Integer);
+    procedure UpdateWindow(Counter: Integer; NoOfRecords: Integer);
     var
         EndTime: DateTime;
         CurrDuration: Duration;
         EstimatedDuration: Duration;
-    begin
-        if not IsGuiAllowed then
-            exit;
 
+    begin
         if CurrentDateTime < LastUpdate + 1000 then
             exit;
 
@@ -90,6 +58,24 @@ codeunit 81501 "Dialog Helper Impl TBHLG"
 
         Window.Update(21, FormatDuration(EstimatedDuration - CurrDuration));
         Window.Update(22, Format(EndTime, 0, '<Hours24>:<Minutes,2>:<Seconds,2>'));
+
+    end;
+
+    procedure UpdateWindow(FieldNo: Integer; Value: Text);
+    begin
+        if not IsGuiAllowed then
+            exit;
+
+        Window.update(FieldNo, Value);
+    end;
+
+    procedure UpdateWindow(FieldNo: Integer; Value: Text; Counter: Integer; NoOfRecords: Integer);
+    begin
+        if not IsGuiAllowed then
+            exit;
+
+        UpdateWindow(FieldNo, Value);
+        UpdateWindow(Counter, NoOfRecords);
     end;
 
     local procedure FormatDuration(NewDuration: Duration): Text;

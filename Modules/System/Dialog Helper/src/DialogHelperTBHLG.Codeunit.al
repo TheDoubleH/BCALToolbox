@@ -30,7 +30,7 @@ codeunit 81500 "Dialog Helper TBHLG"
     /// <param name="NoOfRecords">Integer; Specify the Total Records being processed. (Used to calculate total progress)</param>
     procedure UpdateWindow(Counter: Integer; NoOfRecords: Integer);
     begin
-        DialogHelperImpl.UpdateWindow();
+        DialogHelperImpl.UpdateWindow(Counter, NoOfRecords);
     end;
 
 
