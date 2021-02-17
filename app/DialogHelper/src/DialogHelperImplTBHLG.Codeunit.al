@@ -42,7 +42,7 @@ codeunit 81501 "Dialog Helper Impl TBHLG"
         if CurrentDateTime < LastUpdate + 1000 then
             exit;
 
-        Window.Update(FieldNo, ROUND(Counter / NoOfRecords * 10000, 1, '<'));
+        //Window.Update(FieldNo, ROUND(Counter / NoOfRecords * 10000, 1, '<'));
         LastUpdate := CurrentDateTime;
 
         if StartTime = 0DT then
@@ -91,12 +91,6 @@ codeunit 81501 "Dialog Helper Impl TBHLG"
         ELSE
             EXIT(STRSUBSTNO('%1 %2', Seconds, SecondsTxt));
     END;
-
-    //local procedure ProgressBar(Percentage: Decimal): ReturnValue: Text
-    //var
-    //begin
-    //
-    //  end;
 
     local procedure IsGuiAllowed() GuiIsAllowed: Boolean
     var
