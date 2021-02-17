@@ -22,10 +22,10 @@ page 81500 "Progress Bar Test TBHLG"
     {
         area(Processing)
         {
-            action(TestProgressBar)
+            action(TestProgressBar1)
             {
                 ApplicationArea = All;
-                Caption = 'Test Progress Bar';
+                Caption = '10 pct';
                 Promoted = true;
                 PromotedCategory = Process;
                 PromotedIsBig = true;
@@ -33,9 +33,93 @@ page 81500 "Progress Bar Test TBHLG"
 
                 trigger OnAction()
                 begin
-                    Window.open('Processing, Please be patient\\123456789012345678901234567890\#1########################');
-                    Window.Update(1, ProgressBar.ProgressBar(Percentage));
+                    Window.open('#1################################################');
+                    Window.Update(1, ProgressBar.ProgressBar(10));
                     sleep(5000);
+                    Window.Close();
+                end;
+            }
+
+            action(TestProgressBar2)
+            {
+                ApplicationArea = All;
+                Caption = '7 pct';
+                Promoted = true;
+                PromotedCategory = Process;
+                PromotedIsBig = true;
+                Image = AddWatch;
+
+                trigger OnAction()
+                begin
+                    Window.open('#1################################################');
+                    Window.Update(1, ProgressBar.ProgressBar(7));
+                    sleep(5000);
+                    Window.Close();
+                end;
+            }
+
+            action(TestProgressBar3)
+            {
+                ApplicationArea = All;
+                Caption = '50 pct';
+                Promoted = true;
+                PromotedCategory = Process;
+                PromotedIsBig = true;
+                Image = AddWatch;
+
+                trigger OnAction()
+                begin
+                    Window.open('#1################################################');
+                    Window.Update(1, ProgressBar.ProgressBar(50));
+                    sleep(5000);
+                    Window.Close();
+                end;
+            }
+
+            action(TestProgressBar4)
+            {
+                ApplicationArea = All;
+                Caption = 'Rolling';
+                Promoted = true;
+                PromotedCategory = Process;
+                PromotedIsBig = true;
+                Image = AddWatch;
+
+                trigger OnAction()
+                var
+                    pct: Integer;
+                begin
+                    Window.open('#1################################################');
+
+                    repeat
+                        Window.Update(1, ProgressBar.ProgressBar(pct));
+                        sleep(1000);
+                        pct += 1;
+                    until pct = 101;
+                    Window.Close();
+                end;
+            }
+
+            action(TestProgressBar5)
+            {
+                ApplicationArea = All;
+                Caption = 'Rolling Alt';
+                Promoted = true;
+                PromotedCategory = Process;
+                PromotedIsBig = true;
+                Image = AddWatch;
+
+                trigger OnAction()
+                var
+                    pct: Integer;
+                begin
+                    Window.open('#1################################################');
+                    repeat
+                        Window.Update(1, ProgressBar.ProgressBar(pct, 100));
+                        sleep(1000);
+                        pct += 1;
+                    until pct = 101;
+                    Window.Close();
                 end;
             }
         }
