@@ -92,6 +92,12 @@ codeunit 81501 "Dialog Helper Impl TBHLG"
             EXIT(STRSUBSTNO('%1 %2', Seconds, SecondsTxt));
     END;
 
+    local procedure ProgressBar(Percentage: Decimal): ReturnValue: Text
+    var
+    begin
+
+    end;
+
     local procedure IsGuiAllowed() GuiIsAllowed: Boolean
     var
         Handled: Boolean;
