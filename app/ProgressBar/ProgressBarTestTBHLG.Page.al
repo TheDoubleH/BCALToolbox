@@ -43,36 +43,49 @@ page 81500 "Progress Bar Test TBHLG"
             action(TestProgressBar2)
             {
                 ApplicationArea = All;
-                Caption = '7 pct';
+                Caption = '0 - 100 with EndTime';
                 Promoted = true;
                 PromotedCategory = Process;
                 PromotedIsBig = true;
                 Image = AddWatch;
 
                 trigger OnAction()
+                var
+                    Pct: Decimal;
+                    DialogHelper: Codeunit "Dialog Helper TBHLG";
                 begin
-                    Window.open('#1################################################');
-                    Window.Update(1, ProgressBar.ProgressBar(7));
-                    sleep(5000);
-                    Window.Close();
+                    DialogHelper.OpenWindow('', true);
+                    repeat
+                        pct += 1;
+                        DialogHelper.UpdateWindow(Pct, 100);
+                        sleep(1000);
+
+                    until pct = 100;
+
                 end;
             }
 
             action(TestProgressBar3)
             {
                 ApplicationArea = All;
-                Caption = '50 pct';
+                Caption = '0 - 100 without EndTime';
                 Promoted = true;
                 PromotedCategory = Process;
                 PromotedIsBig = true;
                 Image = AddWatch;
 
                 trigger OnAction()
+                var
+                    Pct: Decimal;
+                    DialogHelper: Codeunit "Dialog Helper TBHLG";
                 begin
-                    Window.open('#1################################################');
-                    Window.Update(1, ProgressBar.ProgressBar(50));
-                    sleep(5000);
-                    Window.Close();
+                    DialogHelper.OpenWindow('', false);
+                    repeat
+                        pct += 1;
+                        DialogHelper.UpdateWindow(Pct, 100);
+                        sleep(1000);
+                    until pct = 100;
+
                 end;
             }
 

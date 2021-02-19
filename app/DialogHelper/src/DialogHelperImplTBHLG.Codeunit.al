@@ -7,9 +7,11 @@ codeunit 81501 "Dialog Helper Impl TBHLG"
         LastUpdate: DateTime;
         StartTime: DateTime;
         Window: Dialog;
-        ElapsedTimeTxt: Label '\Elapsed time :...........#20#############';
-        EstimatedEndTimeTxt: label '\Estimated end time :.....#22#############';
-        EstimatedTimeLeftTxt: Label '\Estimated time left:....#21#############';
+        ProgressBarPlaceHolder: Label '#20###############################################';
+        ElapsedTimeTxt: Label '\\Elapsed time :.................. #21#############';
+        EstimatedTimeLeftTxt: Label '\Estimated time left :...... #22#############';
+        EstimatedEndTimeTxt: label '\Estimated end time :..... #23#############';
+
         MinutesTxt: Label 'Minutes';
         SecondsTxt: Label 'Seconds';
 
@@ -22,6 +24,10 @@ codeunit 81501 "Dialog Helper Impl TBHLG"
 
         StartTime := 0DT;
         WindowString := DialogString;
+        if WindowString = '' then
+            WindowString := ProgressBarPlaceHolder
+        else
+            WindowString := WindowString + '\\' + ProgressBarPlaceHolder;
 
         if ShowEstimatedEndTime then begin
             WindowString := WindowString + ElapsedTimeTxt + EstimatedTimeLeftTxt + EstimatedEndTimeTxt;
@@ -34,6 +40,7 @@ codeunit 81501 "Dialog Helper Impl TBHLG"
 
     procedure UpdateWindow(Counter: Integer; NoOfRecords: Integer);
     var
+        ProgressBar: Codeunit "Progress Bar TBHLG";
         EndTime: DateTime;
         CurrDuration: Duration;
         EstimatedDuration: Duration;
@@ -42,7 +49,10 @@ codeunit 81501 "Dialog Helper Impl TBHLG"
         if CurrentDateTime < LastUpdate + 1000 then
             exit;
 
-        //Window.Update(FieldNo, ROUND(Counter / NoOfRecords * 10000, 1, '<'));
+        if Counter = 0 then
+            exit;
+
+        Window.Update(20, ProgressBar.ProgressBar(Counter, NoOfRecords));
         LastUpdate := CurrentDateTime;
 
         if StartTime = 0DT then
@@ -51,13 +61,13 @@ codeunit 81501 "Dialog Helper Impl TBHLG"
         CurrDuration := CurrentDateTime - StartTime;
         EstimatedDuration := ROUND((CurrentDateTime - StartTime) * 100 / (Counter / NoOfRecords * 100), 100);
         EndTime := StartTime + EstimatedDuration;
-        Window.UPDATE(20, FormatDuration(CurrDuration));
+        Window.Update(21, FormatDuration(CurrDuration));
 
         IF CurrDuration <= 2000 then
             exit;
 
-        Window.Update(21, FormatDuration(EstimatedDuration - CurrDuration));
-        Window.Update(22, Format(EndTime, 0, '<Hours24>:<Minutes,2>:<Seconds,2>'));
+        Window.Update(22, FormatDuration(EstimatedDuration - CurrDuration));
+        Window.Update(23, Format(EndTime, 0, '<Hours24>:<Minutes,2>:<Seconds,2>'));
 
     end;
 
@@ -66,7 +76,7 @@ codeunit 81501 "Dialog Helper Impl TBHLG"
         if not IsGuiAllowed then
             exit;
 
-        Window.update(FieldNo, Value);
+        Window.Update(FieldNo, Value);
     end;
 
     procedure UpdateWindow(FieldNo: Integer; Value: Text; Counter: Integer; NoOfRecords: Integer);
@@ -83,13 +93,13 @@ codeunit 81501 "Dialog Helper Impl TBHLG"
         Minutes: Integer;
         Seconds: Integer;
     begin
-        NewDuration := ROUND(NewDuration / 1000, 1);
-        Minutes := ROUND(NewDuration / 60, 1, '<');
+        NewDuration := Round(NewDuration / 1000, 1);
+        Minutes := Round(NewDuration / 60, 1, '<');
         Seconds := NewDuration - (Minutes * 60);
         IF Minutes > 0 then
-            EXIT(STRSUBSTNO('%1 %2 %3 %4', Minutes, MinutesTxt, Seconds, SecondsTxt))
+            exit(StrSubstNo('%1 %2 %3 %4', Minutes, MinutesTxt, Seconds, SecondsTxt))
         ELSE
-            EXIT(STRSUBSTNO('%1 %2', Seconds, SecondsTxt));
+            exit(StrSubstNo('%1 %2', Seconds, SecondsTxt));
     END;
 
     local procedure IsGuiAllowed() GuiIsAllowed: Boolean
