@@ -22,3 +22,4 @@ steps:
     artifacttype: 'Sandbox'
     versionselect: NextMajor
     appversiontemplate: '?.?.*.0'
+    sastoken: $(bc.sastoken)
