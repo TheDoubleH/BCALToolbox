@@ -1,5 +1,7 @@
-codeunit 50004 "SO Import Excel Helper TBHLG"
+codeunit 81505 "Excel Import Helper Impl TBHLG"
 {
+    Access = Internal;
+
     /// <summary> 
     /// This function will ask the user for a (Excel) file name, and return the filled Excel Buffer
     /// </summary>
