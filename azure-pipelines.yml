@@ -1,6 +1,6 @@
 name: $(Build.BuildId)
 
-pool: WaldoHetzner
+pool: Helgesen Build
 
 variables:
 - group: Secrets
