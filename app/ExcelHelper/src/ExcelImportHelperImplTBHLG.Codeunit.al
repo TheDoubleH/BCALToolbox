@@ -1,3 +1,7 @@
+/// <summary>
+/// Codeunit Excel Import Helper Impl TBHLG (ID 81505).
+/// Implementation Codeunit
+/// </summary>
 codeunit 81505 "Excel Import Helper Impl TBHLG"
 {
     Access = Internal;

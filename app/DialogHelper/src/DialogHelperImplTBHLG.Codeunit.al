@@ -1,3 +1,7 @@
+/// <summary>
+/// Codeunit Dialog Helper Impl TBHLG (ID 81501).
+/// Implementation Codeunit
+/// </summary>
 codeunit 81501 "Dialog Helper Impl TBHLG"
 {
     Access = Internal;

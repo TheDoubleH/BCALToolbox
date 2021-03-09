@@ -1,3 +1,7 @@
+/// <summary>
+/// Codeunit Progress Bar Impl TBHLG (ID 81503).
+/// Implementation Codeunit
+/// </summary>
 codeunit 81503 "Progress Bar Impl TBHLG"
 {
     Access = Internal;
@@ -19,7 +23,6 @@ codeunit 81503 "Progress Bar Impl TBHLG"
         FillPercentage: Integer;
         FillCount: integer;
     begin
-        //FillPercentage := round(Percentage, 5);
         FillCount := round(Percentage / 2.777777778, 1);
         ReturnValue := PadStr('', FillCount, '█');
         ReturnValue := PadStr(ReturnValue, 36, '▒');
