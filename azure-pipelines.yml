@@ -20,6 +20,19 @@ steps:
 - task: ALOpsAppCompiler@2
   inputs:
     artifacttype: 'Sandbox'
+    appversiontemplate: '?.?.*.0'
+    sastoken: $(bc.sastoken)
+    
+- task: ALOpsAppCompiler@2
+  inputs:
+    artifacttype: 'Sandbox'
+    versionselect: NextMinor
+    appversiontemplate: '?.?.*.0'
+    sastoken: $(bc.sastoken)
+
+- task: ALOpsAppCompiler@2
+  inputs:
+    artifacttype: 'Sandbox'
     versionselect: NextMajor
     appversiontemplate: '?.?.*.0'
     sastoken: $(bc.sastoken)
