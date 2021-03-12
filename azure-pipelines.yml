@@ -10,9 +10,6 @@ trigger:
    include:
      - master
 
-jobs:
-- job: One
-
 steps:
 - checkout: self
   clean: true 
