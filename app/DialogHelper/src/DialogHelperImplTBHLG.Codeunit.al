@@ -10,17 +10,15 @@ codeunit 81501 "Dialog Helper Impl TBHLG"
         LastUpdate: DateTime;
         StartTime: DateTime;
         Window: Dialog;
-        ProgressBarPlaceHolder: Label '#20###############################################', Comment = '20 = Progress Bar Text';
-        ElapsedTimeTxt: Label '\\Elapsed time :.................. #21#############', Comment = '21 = Elapsed Time';
-        EstimatedTimeLeftTxt: Label '\Estimated time left :...... #22#############', Comment = '22 = Estimated time left';
-        EstimatedEndTimeTxt: label '\Estimated end time :..... #23#############', Comment = '23 = Calculated End Time';
-
-        MinutesTxt: Label 'Minutes';
-        SecondsTxt: Label 'Seconds';
 
     procedure OpenWindow(DialogString: text; ShowEstimatedEndTime: Boolean)
     var
         WindowString: Text;
+        ProgressBarPlaceHolder: Label '#20###############################################', Comment = '20 = Progress Bar Text';
+        ElapsedTimeTxt: Label '\\Elapsed time :.................. #21#############', Comment = '21 = Elapsed Time';
+        EstimatedTimeLeftTxt: Label '\Estimated time left :...... #22#############', Comment = '22 = Estimated time left';
+        EstimatedEndTimeTxt: label '\Estimated end time :..... #23#############', Comment = '23 = Calculated End Time';
+        somerandomCrap: label 'Let see what happend %1';
     begin
         if not IsGuiAllowed() then
             exit;
@@ -92,17 +90,19 @@ codeunit 81501 "Dialog Helper Impl TBHLG"
     end;
 
     local procedure FormatDuration(NewDuration: Duration): Text;
-    VAR
+    var
         Minutes: Integer;
         Seconds: Integer;
+        MinuteAndSecondsTxt: Label '%1 Minutes, %2 Seconds', Comment = '%1 = Minutes passed ; %2 = Seconds Passed';
+        SecondsTxt: Label '%1 Seconds', Comment = '%1 = Seconds Passed';
     begin
         NewDuration := Round(NewDuration / 1000, 1);
         Minutes := Round(NewDuration / 60, 1, '<');
         Seconds := NewDuration - (Minutes * 60);
         IF Minutes > 0 then
-            exit(StrSubstNo('%1 %2 %3 %4', Minutes, MinutesTxt, Seconds, SecondsTxt))
+            exit(StrSubstNo(MinuteAndSecondsTxt, Minutes, Seconds))
         ELSE
-            exit(StrSubstNo('%1 %2', Seconds, SecondsTxt));
+            exit(StrSubstNo(SecondsTxt, Seconds));
     END;
 
     local procedure IsGuiAllowed() GuiIsAllowed: Boolean
