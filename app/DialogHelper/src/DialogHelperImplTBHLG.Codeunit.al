@@ -14,11 +14,10 @@ codeunit 81501 "Dialog Helper Impl TBHLG"
     procedure OpenWindow(DialogString: text; ShowEstimatedEndTime: Boolean)
     var
         WindowString: Text;
-        ProgressBarPlaceHolder: Label '#20###############################################', Comment = '20 = Progress Bar Text';
-        ElapsedTimeTxt: Label '\\Elapsed time :.................. #21#############', Comment = '21 = Elapsed Time';
-        EstimatedTimeLeftTxt: Label '\Estimated time left :...... #22#############', Comment = '22 = Estimated time left';
-        EstimatedEndTimeTxt: label '\Estimated end time :..... #23#############', Comment = '23 = Calculated End Time';
-        somerandomCrap: label 'Let see what happend %1';
+        ProgressBarPlaceHolderTxt: Label '#20###############################################', Comment = '%20 = Progress Bar Text';
+        ElapsedTimeTxt: Label '\\Elapsed time :.................. #21#############', Comment = '%21 = Elapsed Time';
+        EstimatedTimeLeftTxt: Label '\Estimated time left :...... #22#############', Comment = '%22 = Estimated time left';
+        EstimatedEndTimeTxt: label '\Estimated end time :..... #23#############', Comment = '%23 = Calculated End Time';
     begin
         if not IsGuiAllowed() then
             exit;
@@ -26,9 +25,9 @@ codeunit 81501 "Dialog Helper Impl TBHLG"
         StartTime := 0DT;
         WindowString := DialogString;
         if WindowString = '' then
-            WindowString := ProgressBarPlaceHolder
+            WindowString := ProgressBarPlaceHolderTxt
         else
-            WindowString := WindowString + '\\' + ProgressBarPlaceHolder;
+            WindowString := WindowString + '\\' + ProgressBarPlaceHolderTxt;
 
         if ShowEstimatedEndTime then begin
             WindowString := WindowString + ElapsedTimeTxt + EstimatedTimeLeftTxt + EstimatedEndTimeTxt;
