@@ -20,13 +20,13 @@ codeunit 81503 "Progress Bar Impl TBHLG"
 
     procedure ProgressBar(Percentage: Decimal) ReturnValue: Text;
     var
-        FillPercentage: Integer;
         FillCount: integer;
+        ProgressBarTxt: Label '%1 %2%3', Comment = '%1 = First Half of Progress Bar; %2 Percentage Text; %3 Second Half of Progress Bar ';
     begin
         FillCount := round(Percentage / 2.777777778, 1);
         ReturnValue := PadStr('', FillCount, '█');
         ReturnValue := PadStr(ReturnValue, 36, '▒');
-        ReturnValue := StrSubstNo('%1 %2%3', CopyStr(ReturnValue, 1, 18), Format(Percentage, 4, '<Integer>') + '% ', CopyStr(ReturnValue, 19, 18));
+        ReturnValue := StrSubstNo(ProgressBarTxt, CopyStr(ReturnValue, 1, 18), Format(Percentage, 4, '<Integer>') + '% ', CopyStr(ReturnValue, 19, 18));
     end;
 
 }

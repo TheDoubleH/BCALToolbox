@@ -7,14 +7,13 @@ codeunit 81501 "Dialog Helper Impl TBHLG"
     Access = Internal;
 
     var
-        EndTime: DateTime;
         LastUpdate: DateTime;
         StartTime: DateTime;
         Window: Dialog;
-        ProgressBarPlaceHolder: Label '#20###############################################';
-        ElapsedTimeTxt: Label '\\Elapsed time :.................. #21#############';
-        EstimatedTimeLeftTxt: Label '\Estimated time left :...... #22#############';
-        EstimatedEndTimeTxt: label '\Estimated end time :..... #23#############';
+        ProgressBarPlaceHolder: Label '#20###############################################', Comment = '20 = Progress Bar Text';
+        ElapsedTimeTxt: Label '\\Elapsed time :.................. #21#############', Comment = '21 = Elapsed Time';
+        EstimatedTimeLeftTxt: Label '\Estimated time left :...... #22#############', Comment = '22 = Estimated time left';
+        EstimatedEndTimeTxt: label '\Estimated end time :..... #23#############', Comment = '23 = Calculated End Time';
 
         MinutesTxt: Label 'Minutes';
         SecondsTxt: Label 'Seconds';
@@ -77,7 +76,7 @@ codeunit 81501 "Dialog Helper Impl TBHLG"
 
     procedure UpdateWindow(FieldNo: Integer; Value: Text);
     begin
-        if not IsGuiAllowed then
+        if not IsGuiAllowed() then
             exit;
 
         Window.Update(FieldNo, Value);
@@ -85,7 +84,7 @@ codeunit 81501 "Dialog Helper Impl TBHLG"
 
     procedure UpdateWindow(FieldNo: Integer; Value: Text; Counter: Integer; NoOfRecords: Integer);
     begin
-        if not IsGuiAllowed then
+        if not IsGuiAllowed() then
             exit;
 
         UpdateWindow(FieldNo, Value);
