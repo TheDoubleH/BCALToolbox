@@ -18,6 +18,9 @@
 	],
 	"settings": {
 		"CRS.ObjectNameSuffix": "TBHLG",
-		"CRS.OnSaveAlFileAction": "Rename"
+		"CRS.OnSaveAlFileAction": "Rename",
+		"al.codeAnalyzers": [
+		  "${CodeCop}", "${UICop}", "${AppSourceCop}", "${PerTenantExtensionCop}",
+		],	
 	}
 }
