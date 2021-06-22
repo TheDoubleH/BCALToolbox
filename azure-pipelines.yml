@@ -7,23 +7,32 @@ trigger:
 
 strategy:
   matrix:
-    'Current Version - W1':
+    'Compile Against W1 - Current Version':
       artifactCountry: 'w1'
       artifactVersion: 'Current'
-    'Current Version - US':
-      artifactCountry: 'us'
-      artifactVersion: 'Current'
-    'Next Minor Version - W1':
+    'Compile Against W1 - Next Minor':
       artifactCountry: 'w1'
       artifactVersion: 'NextMinor'
-    'Next Minor Version - US':
-      artifactCountry: 'us'
-      artifactVersion: 'NextMinor'
-    'Next Major Version - W1':
+    'Compile Against W1 - Next Minor':
       artifactCountry: 'w1'
       artifactVersion: 'NextMajor'
-    'Next Major Version - US':
+    'Compile Against United States - Current Version':
       artifactCountry: 'us'
+      artifactVersion: 'Current'
+    'Compile Against United States - Next Minor':
+      artifactCountry: 'us'
+      artifactVersion: 'NextMinor'
+    'Compile Against United States - Next Minor':
+      artifactCountry: 'us'
+      artifactVersion: 'NextMajor'
+    'Compile Against Canada - Current Version':
+      artifactCountry: 'ca'
+      artifactVersion: 'Current'
+    'Compile Against Canada - Next Minor':
+      artifactCountry: 'ca'
+      artifactVersion: 'NextMinor'
+    'Compile Against Canada - Next Minor':
+      artifactCountry: 'ca'
       artifactVersion: 'NextMajor'
 
 pool: Helgesen Build
@@ -32,11 +41,11 @@ variables:
 - group: Secrets
 
 schedules:
-- cron: '5 0 * * *'
-  displayName: Daily Current Next Minor and Major build
+- cron: '0 0 * * *'
+  displayName: Daily Midnight ALOps Compile against Current, Next Minor, and Next Major
   branches:
     include:
-    - main
+    - master
   always: true
 
 steps:
@@ -47,12 +56,14 @@ steps:
 # The compiler will "Batch Compile", meaning: it will compile everything in the workingfolder
 
 - task: ALOpsAppCompiler@2
-  displayName: 'Compile App'
+  displayName: 'Compile $(Build.Repository.Name)'
   inputs:  
     artifacttype: 'Sandbox'
     artifactcountry: '$(artifactCountry)'
     versionselect: '$(artifactVersion)'
     appversiontemplate: '?.?.*.0'
     alcodeanalyzer: UICop,CodeCop,PerTenantExtensionCop
+    failonwarnings: true
+    publishartifact: false
     ruleset: 'https://navmgtstorage00000000.blob.core.windows.net/backup/app.ruleset.json?sp=r&st=2021-01-17T11:45:50Z&se=2022-02-01T19:45:50Z&spr=https&sv=2019-12-12&sr=b&sig=Y%2BibBuN2cTg3%2FIasH9rigqGBoUCCb9rsSXsrwaW8f%2Fc%3D'
     sastoken: $(bc.sastoken)

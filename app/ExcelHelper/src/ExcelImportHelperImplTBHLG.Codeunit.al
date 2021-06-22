@@ -33,7 +33,8 @@ codeunit 81505 "Excel Import Helper Impl TBHLG"
         UploadExcelFileLbl: Label 'Upload Excel File';
         PleaseSelectFileErr: Label 'Please select a file';
     begin
-        if not UploadIntoStream(UploadExcelFileLbl, '', '', ClientFileName, ExcelInstream) then
+        //if not UploadIntoStream(UploadExcelFileLbl, '', '', ClientFileName, ExcelInstream) then
+        if not UploadIntoStream(ClientFileName, ExcelInStream) then
             Error(PleaseSelectFileErr);
 
         if ClientFileName = '' then
