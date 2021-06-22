@@ -16,17 +16,6 @@ strategy:
     'Compile Against W1 - Next Major':
       artifactCountry: 'w1'
       artifactVersion: 'NextMajor'
-strategy:
-  matrix:
-    'Compile Against W1 - Current Version':
-      artifactCountry: 'w1'
-      artifactVersion: 'Current'
-    'Compile Against W1 - Next Minor':
-      artifactCountry: 'w1'
-      artifactVersion: 'NextMinor'
-    'Compile Against W1 - Next Major':
-      artifactCountry: 'w1'
-      artifactVersion: 'NextMajor'
     'Compile Against United States - Current Version':
       artifactCountry: 'us'
       artifactVersion: 'Current'
