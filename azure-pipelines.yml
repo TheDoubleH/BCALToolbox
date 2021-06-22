@@ -13,7 +13,18 @@ strategy:
     'Compile Against W1 - Next Minor':
       artifactCountry: 'w1'
       artifactVersion: 'NextMinor'
+    'Compile Against W1 - Next Major':
+      artifactCountry: 'w1'
+      artifactVersion: 'NextMajor'
+strategy:
+  matrix:
+    'Compile Against W1 - Current Version':
+      artifactCountry: 'w1'
+      artifactVersion: 'Current'
     'Compile Against W1 - Next Minor':
+      artifactCountry: 'w1'
+      artifactVersion: 'NextMinor'
+    'Compile Against W1 - Next Major':
       artifactCountry: 'w1'
       artifactVersion: 'NextMajor'
     'Compile Against United States - Current Version':
@@ -22,17 +33,8 @@ strategy:
     'Compile Against United States - Next Minor':
       artifactCountry: 'us'
       artifactVersion: 'NextMinor'
-    'Compile Against United States - Next Minor':
+    'Compile Against United States - Next Major':
       artifactCountry: 'us'
-      artifactVersion: 'NextMajor'
-    'Compile Against Canada - Current Version':
-      artifactCountry: 'ca'
-      artifactVersion: 'Current'
-    'Compile Against Canada - Next Minor':
-      artifactCountry: 'ca'
-      artifactVersion: 'NextMinor'
-    'Compile Against Canada - Next Minor':
-      artifactCountry: 'ca'
       artifactVersion: 'NextMajor'
 
 pool: Helgesen Build
