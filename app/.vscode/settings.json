@@ -14,5 +14,7 @@
     "CRS.RenameWithGit": false,
     "CRS.ObjectNameSuffix": " TBHLG",
     "editor.formatOnSave": true,
-    "alVarHelper.ignoreALSuffix": "TBHLG"
+    "alVarHelper.ignoreALSuffix": "TBHLG",
+    "CRS.DisableDefaultAlSnippets": true,
+    "alOutline.fixCodeCopMissingParenthesesOnSave": true
 }
