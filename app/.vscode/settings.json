@@ -1,0 +1,18 @@
+{
+    "al.codeAnalyzers": [
+        "${CodeCop}",
+        "${UICop}",
+        "${PerTenantExtensionCop}"
+    ],
+    "al.enableCodeAnalysis": true,
+    "al.ruleSetPath": ".RuleSets/App.ruleset.json",
+    "al.enableCodeActions": true,
+    "CRS.FileNamePattern": "<ObjectNameShort>.<ObjectTypeShortPascalCase>.al",
+    "CRS.FileNamePatternExtensions": "<ObjectNameShort>.<ObjectTypeShortPascalCase>.al",
+    "CRS.FileNamePatternPageCustomizations": "<ObjectNameShort>.<ObjectTypeShortPascalCase>.al",
+    "CRS.OnSaveAlFileAction": "Rename",
+    "CRS.RenameWithGit": false,
+    "CRS.ObjectNameSuffix": " TBHLG",
+    "editor.formatOnSave": true,
+    "alVarHelper.ignoreALSuffix": "TBHLG"
+}
