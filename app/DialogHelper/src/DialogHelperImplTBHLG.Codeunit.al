@@ -14,7 +14,7 @@ codeunit 81501 "Dialog Helper Impl TBHLG"
     procedure OpenWindow(DialogString: text; ShowEstimatedEndTime: Boolean)
     var
         WindowString: Text;
-        ProgressBarPlaceHolderTxt: Label '#20###############################################', Comment = '%20 = Progress Bar Text';
+        ProgressBarPlaceHolderTxt: Label '#20###############################################', Comment = '%20 = Progress Bar Text', Locked=true;
         ElapsedTimeTxt: Label '\\Elapsed time :.................. #21#############', Comment = '%21 = Elapsed Time';
         EstimatedTimeLeftTxt: Label '\Estimated time left :...... #22#############', Comment = '%22 = Estimated time left';
         EstimatedEndTimeTxt: label '\Estimated end time :..... #23#############', Comment = '%23 = Calculated End Time';
@@ -71,20 +71,20 @@ codeunit 81501 "Dialog Helper Impl TBHLG"
 
     end;
 
-    procedure UpdateWindow(FieldNo: Integer; Value: Text);
+    procedure UpdateWindow(DialogFieldNo: Integer; DialogValue: Text);
     begin
         if not IsGuiAllowed() then
             exit;
 
-        Window.Update(FieldNo, Value);
+        Window.Update(DialogFieldNo, DialogValue);
     end;
 
-    procedure UpdateWindow(FieldNo: Integer; Value: Text; Counter: Integer; NoOfRecords: Integer);
+    procedure UpdateWindow(DialogFieldNo: Integer; DialogValue: Text; Counter: Integer; NoOfRecords: Integer);
     begin
         if not IsGuiAllowed() then
             exit;
 
-        UpdateWindow(FieldNo, Value);
+        UpdateWindow(DialogFieldNo, DialogValue);
         UpdateWindow(Counter, NoOfRecords);
     end;
 

@@ -39,12 +39,12 @@ codeunit 81500 "Dialog Helper TBHLG"
     /// Progressbar, Duration and Estimated End time is not updated.
     ///  If UI is not allowed, no action is taken
     /// </summary>
-    /// <param name="FieldNo">Integer; The FieldNo for the Placeholder</param>
-    /// <param name="Value">Text; </param>
-    procedure UpdateWindow(FieldNo: Integer; Value: Text);
+    /// <param name="DialogFieldNo">Integer; The FieldNo for the Placeholder</param>
+    /// <param name="DialogValue">Text; </param>
+    procedure UpdateWindow(DialogFieldNo: Integer; DialogValue: Text);
     var
     begin
-        DialogHelperImpl.UpdateWindow(FieldNo, Value);
+        DialogHelperImpl.UpdateWindow(DialogFieldNo, DialogValue);
     end;
 
 
@@ -53,12 +53,12 @@ codeunit 81500 "Dialog Helper TBHLG"
     /// Progressbar, Duration and Estimated End time is also updated.
     ///  If UI is not allowed, no action is taken
     /// </summary>
-    /// <param name="FieldNo">Integer; The FieldNo for the Placeholder</param>
-    /// <param name="Value">Text; </param>
+    /// <param name="DialogFieldNo">Integer; The FieldNo for the Placeholder</param>
+    /// <param name="DialogValue">Text; </param>
     /// <param name="Counter">Integer; Specify the current Counter (Record x of y) of the record being processed. (Used to calculate total progress)</param>
     /// <param name="NoOfRecords">Integer; Specify the Total Records being processed. (Used to calculate total progress)</param>
-    procedure UpdateWindow(FieldNo: Integer; Value: Text; Counter: Integer; NoOfRecords: Integer);
+    procedure UpdateWindow(DialogFieldNo: Integer; DialogValue: Text; Counter: Integer; NoOfRecords: Integer);
     begin
-        DialogHelperImpl.UpdateWindow(FieldNo, Value, Counter, NoOfRecords);
+        DialogHelperImpl.UpdateWindow(DialogFieldNo, DialogValue, Counter, NoOfRecords);
     end;
 }
